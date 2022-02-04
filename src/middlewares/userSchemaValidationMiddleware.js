@@ -5,7 +5,7 @@ export default function userSchemaValidationMiddleware(req, res, next) {
 
   if (userValidation.error) {
     console.log(userValidation.error.details[0].message);
-    return res.status(422).send('userValidation.error');
+    return res.status(422).send('userSchemaValidation.error');
   }
 
   next();

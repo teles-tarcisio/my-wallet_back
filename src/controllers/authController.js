@@ -1,32 +1,13 @@
-
-
-function simulateAxios(value) {
-  return new Promise(resolve =>
-    setTimeout(() => resolve({...value, status: 'processed'}), 1700)
-  );
-}
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+import db from '../dbConfig.js';
 
 export async function createUser(req, res) {
-  console.log('in: ', req.body);
-  const delay = simulateAxios(req.body);
-  delay.then((resolve) => {
-    console.log(resolve);
-    res.send(resolve);
-    return;
-  });
-}
+  const user = req.body;
 
-export async function loginUser(req, res) {
-  console.log('in: ', req.body);
-  const delay = simulateAxios(req.body);
-  delay.then((resolve) => {
-    console.log(resolve);
-    res.send(resolve);
-    return;
-  });
-}
+  const hashedPassword = bcrypt.hashSync(user.password, 10);
 
-export function findUsers(req, res) {
-  res.sendStatus(501);
-  return;
+  const newUserPromise = await db.collection('users').insertOne({ ...user, password: hashedPassword });
+  console.log(newUserPromise, 'falta try/catch?');
+  res.sendStatus(201);  
 }
