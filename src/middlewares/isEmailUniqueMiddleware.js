@@ -1,6 +1,6 @@
 import db from '../dbConfig.js';
 
-export async function isEmailUniqueMiddleware(req, res, next) {
+export default async function isEmailUniqueMiddleware(req, res, next) {
   try {
     const newUserData = req.body;
 
