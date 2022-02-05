@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { createUser } from '../controllers/authController.js';
+import { createNewUser } from '../controllers/authController.js';
+import { isEmailUniqueMiddleware } from '../middlewares/isEmailUniqueMiddleware.js';
 import userSchemaValidationMiddleware from '../middlewares/userSchemaValidationMiddleware.js';
 
 const authRouter = Router();
 
-authRouter.post('/sign-up', userSchemaValidationMiddleware, createUser);
-authRouter.post('/sign-in', loginUser);
+authRouter.post('/sign-up', userSchemaValidationMiddleware, isEmailUniqueMiddleware, createNewUser);
 
 export default authRouter;

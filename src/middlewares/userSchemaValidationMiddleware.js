@@ -1,11 +1,17 @@
+import { stripHtml } from 'string-strip-html';
 import newUserSchema from '../schemas/newUserSchema.js';
 
 export default function userSchemaValidationMiddleware(req, res, next) {
-  const userValidation = newUserSchema.validate(req.body);
+
+  const newUserData = req.body;
+  newUserData.name = stripHtml(newUserData.name).result.trim();
+  newUserData.email = stripHtml(newUserData.email).result.trim();
+  
+  const userValidation = newUserSchema.validate(newUserData);
 
   if (userValidation.error) {
     console.log(userValidation.error.details[0].message);
-    return res.status(422).send('userSchemaValidation.error');
+    return res.sendStatus(422);
   }
 
   next();
