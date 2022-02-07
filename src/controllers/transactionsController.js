@@ -37,8 +37,7 @@ export async function createTransaction(req, res) {
       date: dayjs().format("DD/MM"),
       userID: userID
     };
-    console.log('-->> ', req.body);
-    
+        
     const newTransactionPromise = await db.collection('transactions').insertOne(transaction);
     
     res.sendStatus(201);

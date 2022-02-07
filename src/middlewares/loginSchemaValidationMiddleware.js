@@ -6,7 +6,6 @@ export default function loginSchemaValidationMiddleware(req, res, next) {
   userData.email = stripHtml(userData.email).result.trim();
       
   const userValidation = loginSchema.validate(userData);
-  console.log('after joi -->', userValidation);
 
   if (userValidation.error) {
     console.log(userValidation.error.details[0].message);

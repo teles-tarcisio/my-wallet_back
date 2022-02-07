@@ -24,8 +24,7 @@ export async function createNewUser(req, res) {
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
-    console.log('login: ', req.body);
-
+    
     const targetUser = await db.collection('users').findOne({ email });
     console.log('found? ', targetUser);
     if (!targetUser) {
@@ -34,7 +33,6 @@ export async function loginUser(req, res) {
     }
 
     const passwordMatch = bcrypt.compareSync(password, targetUser.password);
-    console.log('bcrypt: ', passwordMatch);
     if (!passwordMatch) {
       res.status(403).send('Senha incorreta. Verifique a senha fornecida.');
       return;
@@ -43,8 +41,6 @@ export async function loginUser(req, res) {
     if (targetUser && passwordMatch) {
       const sessionToken = uuidv4();
       await db.collection('sessions').insertOne({ sessionToken, userID: targetUser._id });
-
-      console.log('sucesso, devolver username+token: ', targetUser.name, sessionToken);
       res.send({name: targetUser.name, token: sessionToken});
     }
   } catch (error) {
