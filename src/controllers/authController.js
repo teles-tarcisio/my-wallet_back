@@ -44,8 +44,8 @@ export async function loginUser(req, res) {
       const sessionToken = uuidv4();
       await db.collection('sessions').insertOne({ sessionToken, userID: targetUser._id });
 
-      console.log('sucesso, devolver token: ', sessionToken);
-      res.send(sessionToken);
+      console.log('sucesso, devolver username+token: ', targetUser.name, sessionToken);
+      res.send({name: targetUser.name, token: sessionToken});
     }
   } catch (error) {
     console.log(error);
