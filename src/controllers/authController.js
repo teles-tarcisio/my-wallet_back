@@ -6,12 +6,10 @@ export async function createNewUser(req, res) {
   try {
     const user = req.body;
     const hashedPassword = await bcrypt.hash(user.password, 12);
-    await db.collection('users').insertOne(
-      {
-        ...user,
-        password: hashedPassword
-      }
-    );
+    await db.collection('users').insertOne({
+      ...user,
+      password: hashedPassword,
+    });
     return res.sendStatus(201);
   } catch (error) {
     console.error(error, '!erro! inserindo novo usuário no bd');
@@ -35,8 +33,14 @@ export async function loginUser(req, res) {
 
     if (targetUser && passwordMatch) {
       const sessionToken = uuidv4();
-      await db.collection('sessions').insertOne({ sessionToken, userID: targetUser._id });
-      return res.send({ name: targetUser.name, token: sessionToken });
+      await db.collection('sessions').insertOne({
+        sessionToken,
+        userID: targetUser._id,
+      });
+      return res.send({
+        name: targetUser.name,
+        token: sessionToken,
+      });
     }
   } catch (error) {
     console.error(error);
