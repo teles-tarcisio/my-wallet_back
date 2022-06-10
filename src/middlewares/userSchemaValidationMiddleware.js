@@ -10,7 +10,7 @@ export default function userSchemaValidationMiddleware(req, res, next) {
   const userValidation = newUserSchema.validate(newUserData);
 
   if (userValidation.error) {
-    console.log(userValidation.error.details[0].message);
+    console.error(userValidation.error.details[0].message);
     return res.sendStatus(422);
   }
 

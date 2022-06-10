@@ -8,7 +8,7 @@ export default function loginSchemaValidationMiddleware(req, res, next) {
   const userValidation = loginSchema.validate(userData);
 
   if (userValidation.error) {
-    console.log(userValidation.error.details[0].message);
+    console.error(userValidation.error.details[0].message);
     return res.sendStatus(422);
   }
   next();

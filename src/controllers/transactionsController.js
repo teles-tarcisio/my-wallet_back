@@ -10,8 +10,8 @@ export async function getUserTransactions(req, res) {
     res.status(201).send(transactionsPromise);
     return;
   } catch (error) {
-    console.log(error, '!erro!  obtendo transações do bd');
-    res.sendStatus(500);
+    console.error(error, '!erro!  obtendo transações do bd');
+    return res.sendStatus(500);
   }
 }
 
@@ -22,8 +22,8 @@ async function getUserByToken(target) {
     return userName._id;
 
   } catch (error) {
-    console.log(error, '!erro! buscando usuario logado no bd');
-    res.sendStatus(500);
+    console.error(error, '!erro! buscando usuario logado no bd');
+    return res.sendStatus(500);
   }
 }
 
@@ -40,11 +40,10 @@ export async function createTransaction(req, res) {
         
     const newTransactionPromise = await db.collection('transactions').insertOne(transaction);
     
-    res.sendStatus(201);
-    return;
+    return res.sendStatus(201);
 
   } catch (error) {
-    console.log(error, '!erro! inserindo transação no bd');
-    res.sendStatus(500);
+    console.error(error, '!erro! inserindo transação no bd');
+    return res.sendStatus(500);
   }
 }
