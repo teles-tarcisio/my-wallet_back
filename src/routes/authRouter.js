@@ -1,8 +1,15 @@
 import { Router } from 'express';
 
-import { createNewUser, loginUser } from '../controllers/authController.js';
+import {
+  createNewUser,
+  loginUser,
+} from '../controllers/authController.js';
 
-import { userSchemaValidationMiddleware, isEmailUniqueMiddleware, loginSchemaValidationMiddleware } from '../middlewares/index.js';
+import {
+  userSchemaValidationMiddleware,
+  isEmailUniqueMiddleware,
+  loginSchemaValidationMiddleware,
+} from '../middlewares/index.js';
 
 const authRouter = Router();
 authRouter.post('/sign-up', userSchemaValidationMiddleware, isEmailUniqueMiddleware, createNewUser);
