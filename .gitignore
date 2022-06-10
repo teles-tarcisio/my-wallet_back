@@ -1,4 +1,4 @@
 **node_modules/**
 .env
 **my-wallet_database/**
-.txt
+*.txt
